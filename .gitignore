@@ -1,0 +1,17 @@
+# build output
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# env / secrets — never commit
+.env
+.env.*
+*.pem
+*_deploy
+*_deploy.pub
+
+# os / editor
+.DS_Store
+*.log
