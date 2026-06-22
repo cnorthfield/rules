@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import { render, getFile } from '../lib/dictionary';
+
+const { html } = render(getFile('99-credits'));
+---
+
+<Base title="Colophon">
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <article
+      class="prose prose-zinc max-w-none dark:prose-invert"
+      set:html={html}
+    />
+  </section>
+</Base>

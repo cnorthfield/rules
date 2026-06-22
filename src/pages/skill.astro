@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import { DICTIONARY_URL } from '../lib/site';
+import skillRaw from '../../skill/SKILL.md?raw';
+---
+
+<Base title="Skill">
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="text-3xl font-bold tracking-tight">Install the skill</h1>
+    <p class="mt-4 text-zinc-600 dark:text-zinc-300">
+      The skill makes your coding agent fetch the dictionary <em>before</em> it builds,
+      and follow it for the rest of the task. It's one markdown file.
+    </p>
+
+    <h2 class="mt-10 text-lg font-semibold">1. Save this as <code>SKILL.md</code></h2>
+    <pre
+      class="mt-3 overflow-x-auto rounded-lg bg-zinc-100 p-4 text-sm dark:bg-zinc-900"><code>{skillRaw}</code></pre>
+
+    <h2 class="mt-10 text-lg font-semibold">2. Put it where your agent looks</h2>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-300">For Claude Code:</p>
+    <ul class="mt-2 list-disc space-y-1 pl-6 text-zinc-600 dark:text-zinc-300">
+      <li>
+        Personal (all projects):
+        <code>~/.claude/skills/agents-dictionary/SKILL.md</code>
+      </li>
+      <li>
+        Project (this repo only):
+        <code>.claude/skills/agents-dictionary/SKILL.md</code>
+      </li>
+    </ul>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-300">
+      Other agents: drop the same file into your agent's skills/instructions
+      directory, or paste the body into your <code>AGENTS.md</code>.
+    </p>
+
+    <h2 class="mt-10 text-lg font-semibold">No skill? Just paste the URL</h2>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-300">
+      You can skip the skill entirely and tell your agent at the start of a build:
+    </p>
+    <pre
+      class="mt-3 overflow-x-auto rounded-lg bg-zinc-100 p-4 text-sm dark:bg-zinc-900"><code>Read {DICTIONARY_URL} and follow it for this build.</code></pre>
+  </section>
+</Base>

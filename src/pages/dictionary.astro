@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import { render, type TocItem } from '../lib/dictionary';
+import { DICTIONARY_URL } from '../lib/site';
+
+const { html, toc } = render();
+
+// Group h3 entries under their parent h2 for a two-level sidebar.
+type Group = TocItem & { children: TocItem[] };
+const groups: Group[] = [];
+for (const item of toc) {
+  if (item.level === 2) groups.push({ ...item, children: [] });
+  else if (groups.length) groups[groups.length - 1].children.push(item);
+}
+---
+
+<Base title="Dictionary">
+  <div
+    class="mx-auto max-w-6xl px-4 py-10 lg:grid lg:grid-cols-[17rem_minmax(0,1fr)] lg:gap-12"
+  >
+    <aside class="mb-10 lg:mb-0">
+      <nav
+        class="lg:sticky lg:top-20 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto text-sm"
+        aria-label="Table of contents"
+      >
+        <p class="mb-2 font-semibold text-zinc-900 dark:text-zinc-100">Contents</p>
+        <ul class="space-y-3">
+          {
+            groups.map((g) => (
+              <li>
+                <a
+                  href={`#${g.slug}`}
+                  class="font-medium text-zinc-700 hover:text-zinc-950 dark:text-zinc-300 dark:hover:text-white"
+                >
+                  {g.title}
+                </a>
+                {g.children.length > 0 && (
+                  <ul class="mt-1 space-y-1 border-l border-zinc-200 pl-3 dark:border-zinc-800">
+                    {g.children.map((c) => (
+                      <li>
+                        <a
+                          href={`#${c.slug}`}
+                          class="block text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100"
+                        >
+                          {c.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </aside>
+
+    <article>
+      <div
+        class="mb-8 rounded-lg border border-zinc-200 bg-zinc-50 p-4 text-sm dark:border-zinc-800 dark:bg-zinc-900"
+      >
+        Raw markdown for your agent:
+        <a class="font-mono underline underline-offset-2" href={DICTIONARY_URL}
+          >{DICTIONARY_URL}</a
+        >
+      </div>
+      <div
+        class="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-24 prose-pre:bg-zinc-100 dark:prose-pre:bg-zinc-900"
+        set:html={html}
+      />
+    </article>
+  </div>
+</Base>

@@ -1,0 +1,161 @@
+---
+import Base from '../layouts/Base.astro';
+import { CANONICAL, DICTIONARY_URL, LLMS_FULL_URL, SITE_NAME, base } from '../lib/site';
+
+const agentDisplay = DICTIONARY_URL.replace(/^https?:\/\//, ''); // chrisnorthfield.com/rules/dictionary.md
+const fullDisplay = LLMS_FULL_URL.replace(/^https?:\/\//, '');
+---
+
+<Base>
+  <section class="mx-auto max-w-3xl px-4 pt-16 pb-10">
+    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
+      AI builds it working. It doesn't build it safe.
+    </h1>
+    <p class="mt-5 text-lg text-zinc-600 dark:text-zinc-300">
+      Point your coding agent at one page and it builds the secure version instead of
+      the naive one. The migration that won't lock your table. The upload that won't
+      leak your data. The thing you didn't know you got wrong. Free, no signup, works
+      whether you're an engineer or not.
+    </p>
+
+    <div class="mt-8">
+      <div
+        class="flex flex-col gap-2 rounded-lg border border-zinc-300 bg-zinc-50 p-3 sm:flex-row sm:items-center dark:border-zinc-700 dark:bg-zinc-900"
+      >
+        <code
+          id="agent-url"
+          class="flex-1 select-all break-all font-mono text-base sm:text-lg">{agentDisplay}</code
+        >
+        <button
+          id="copy-btn"
+          data-url={DICTIONARY_URL}
+          class="shrink-0 rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+        >
+          Copy
+        </button>
+      </div>
+      <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+        Paste that into your agent: "read {agentDisplay}, then build it."
+      </p>
+      <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+        Want it all in one fetch? Point any agent at <a
+          class="font-mono underline underline-offset-2"
+          href={LLMS_FULL_URL}>{fullDisplay}</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8">
+    <h2 class="text-xl font-semibold tracking-tight">What goes wrong</h2>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-300">
+      AI writes code like a brilliant junior who's read every book and shipped nothing.
+      Confident, tidy, and quietly wrong in the ways that bite you later. It'll happily
+      give you a database anyone can read, a form that saves your users' card numbers, a
+      server that hands out its own cloud keys. It won't warn you, because it doesn't
+      know to.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8">
+    <h2 class="text-xl font-semibold tracking-tight">What this is</h2>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-300">
+      Fifteen years of "don't do that, do this", written down so your agent reads it
+      before it builds. Not a course, not a framework you have to learn. A page your AI
+      looks things up in, the way it should have all along. You bring the idea. It
+      handles the bits that are easy once you know them, and dangerous when you don't.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8">
+    <h2 class="text-xl font-semibold tracking-tight">See the difference</h2>
+    <p class="mt-2 text-zinc-600 dark:text-zinc-300">
+      Asking your agent to make a column required, on a live table with real traffic:
+    </p>
+    <div class="mt-5 grid gap-5 md:grid-cols-2">
+      <div>
+        <p class="mb-2 text-xs font-semibold tracking-wide text-red-600 uppercase dark:text-red-400">
+          Before
+        </p>
+        <pre class="overflow-x-auto rounded-lg bg-zinc-100 p-4 text-sm dark:bg-zinc-900"><code>ALTER TABLE users
+  ALTER COLUMN email SET NOT NULL;</code></pre>
+        <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+          What your agent writes on its own. It locks the whole table while it scans
+          every row, so nobody can read or write until it finishes. On a big table,
+          that's downtime.
+        </p>
+      </div>
+      <div>
+        <p class="mb-2 text-xs font-semibold tracking-wide text-green-700 uppercase dark:text-green-400">
+          After
+        </p>
+        <pre class="overflow-x-auto rounded-lg bg-zinc-100 p-4 text-sm dark:bg-zinc-900"><code>ALTER TABLE users
+  ADD CONSTRAINT users_email_nn
+  CHECK (email IS NOT NULL) NOT VALID;
+
+ALTER TABLE users
+  VALIDATE CONSTRAINT users_email_nn;
+
+ALTER TABLE users
+  ALTER COLUMN email SET NOT NULL;</code></pre>
+        <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
+          What it writes once it's read this. Same result, no table lock, no downtime.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8">
+    <h2 class="text-xl font-semibold tracking-tight">Who it's for</h2>
+    <p class="mt-3 text-zinc-600 dark:text-zinc-300">
+      If you're an engineer, it's the senior who'd have caught it in review.
+    </p>
+    <p class="mt-2 text-zinc-600 dark:text-zinc-300">
+      If you're not, it's the safety net so the thing you're building doesn't quietly
+      fall over or leak.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 py-8">
+    <h2 class="text-xl font-semibold tracking-tight">How to use it</h2>
+    <ol class="mt-3 list-decimal space-y-2 pl-6 text-zinc-600 dark:text-zinc-300">
+      <li>Tell your agent: read {agentDisplay}, then build.</li>
+      <li>It reads the rules first, and checks anything it's unsure about with you.</li>
+      <li>It builds the safe version. That's it.</li>
+    </ol>
+    <p class="mt-4 text-sm">
+      <a
+        href={base + 'dictionary'}
+        class="underline underline-offset-2 hover:opacity-70">Read the rules</a
+      >
+      or
+      <a href={base + 'skill'} class="underline underline-offset-2 hover:opacity-70"
+        >install the skill</a
+      > so your agent fetches them automatically.
+    </p>
+  </section>
+
+  <section class="mx-auto max-w-3xl px-4 pt-8 pb-16">
+    <p class="text-sm text-zinc-500 dark:text-zinc-400">
+      This won't make you unhackable. Nothing does. It catches the common, avoidable
+      stuff that an experienced engineer would flag and an AI won't. It's free because
+      it should be. If something's wrong or missing, tell me and I'll fix it.
+    </p>
+  </section>
+</Base>
+
+<script is:inline>
+  const btn = document.getElementById('copy-btn');
+  if (btn) {
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.url);
+        const prev = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(() => (btn.textContent = prev), 1500);
+      } catch (e) {
+        /* clipboard blocked; the URL is select-all text anyway */
+      }
+    });
+  }
+</script>
