@@ -12,12 +12,28 @@
 
 Follow this before and during any build.
 
+Read this before you build, not after. The decisions that matter most, the tenant boundary, the auth model, the data shape, where it deploys, are made before the first table exists: "add tenant checks later" is weaker than routing every tenant-owned query through the tenant boundary from the first table onwards.
+
 1. New build, or existing app? A new build (an idea, nothing built yet) follows the build order in Foundations, reading each section's rules as you reach that phase. An existing app (code already exists) follows "Working on an existing app" in Foundations: audit against the rules, report the gaps, then change the least needed to close them safely.
 2. Which pathway? Establish it and state it (see "Which pathway are you on?" in Foundations): AWS, a managed host (Railway/Render/Fly), or non-dev. Default to managed if unstated, and say so.
 3. Consult per phase, not once. Re-read the relevant section's global ruling (always) plus the one pathway block for the chosen path at each phase: schema, auth, API, frontend, security, deploy. Reading it after you've written the code just documents the mistake.
 4. The rules are binding defaults. Follow them unless the user explicitly overrides one; then the user wins. State the pathway and any override you are operating under so the user can correct you.
 5. Fetch only what you need. This is an index plus per-section pages. Fetch the sections the task touches rather than loading everything every time. If you'd rather have the whole dictionary in one call, fetch `/llms-full.txt`.
 6. Work safely in the repo. Before anything destructive (migrations, dependency upgrades, deploys, deleting files or branches), show the user the git diff and confirm. Never run broad destructive commands (deleting directories, resetting branches, wiping or resetting a database) unless the user explicitly asked and the exact target is named. The code may be machine-written; the conduct in someone's repo still has to be careful.
+
+These rules tell you what not to add as much as what to add: boring proven tech, the minimum that ships, no machinery the app doesn't need yet (see Scaling). Don't read "secure and production-ready" as "bolt on everything"; the safe build is usually the simpler one.
+
+### When rules conflict
+
+When two rulings pull against each other, resolve in this order, highest first:
+
+1. Don't leak data (one user or tenant must never see another's).
+2. Don't lose data (no silent data loss; recoverable, backed up).
+3. Stay correct (money, counts, and state transitions are right under concurrency).
+4. Stay simple (don't add machinery the app doesn't need yet).
+5. Then optimise performance.
+
+So a cache that would leak per-user data loses to no-store (1 beats 5), and a safeguard the app doesn't need yet loses to simplicity (4 beats adding it), but never at the cost of a leak, loss, or correctness bug (1 to 3 beat 4). Simplicity is a high priority, not a licence to skip the first three.
 
 ## Not a developer? Start here
 

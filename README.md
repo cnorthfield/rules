@@ -4,6 +4,11 @@ A static site whose product is a **markdown dictionary that coding agents read b
 Point an agent at `https://chrisnorthfield.com/rules/dictionary.md` and it looks up opinionated,
 correct recipes for shipping a secure, production-ready web app — without over-engineering it.
 
+**Production safety for software built by AI agents.** Security is the sharpest edge, but data loss,
+bad auth, broken migrations, runaway cost, and over-engineering are all ways an app hurts you. This
+covers the lot. (The tagline stays "AI builds it working. This makes it safe." — this is the longer
+mental model, not a new headline.)
+
 The site practises what the dictionary preaches: a static Astro build serving clean markdown.
 No backend, no database, no client framework, no analytics, no signup.
 
