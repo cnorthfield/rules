@@ -152,15 +152,53 @@ ALTER TABLE users
 <script is:inline>
   const btn = document.getElementById('copy-btn');
   if (btn) {
-    btn.addEventListener('click', async () => {
+    const RESTING = btn.textContent.trim();
+    const flash = (msg) => {
+      btn.textContent = msg;
+      setTimeout(() => {
+        btn.textContent = RESTING;
+      }, 2000);
+    };
+
+    // In-app browsers (opening the link from X, LinkedIn, Instagram, etc.) and some
+    // mobile browsers block navigator.clipboard, so fall back to a temporary textarea
+    // + execCommand, which works in far more of them.
+    const legacyCopy = (text) => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, text.length); // iOS needs an explicit range
+      let ok = false;
       try {
-        await navigator.clipboard.writeText(btn.dataset.url);
-        const prev = btn.textContent;
-        btn.textContent = 'Copied';
-        setTimeout(() => (btn.textContent = prev), 1500);
+        ok = document.execCommand('copy');
       } catch (e) {
-        /* clipboard blocked; the URL is select-all text anyway */
+        /* no-op */
       }
+      document.body.removeChild(ta);
+      return ok;
+    };
+
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.url;
+      let ok = false;
+      if (navigator.clipboard && window.isSecureContext) {
+        try {
+          await navigator.clipboard.writeText(text);
+          ok = true;
+        } catch (e) {
+          /* fall through to the legacy path */
+        }
+      }
+      if (!ok) ok = legacyCopy(text);
+      // The full prompt is also shown in the caption below, so a hard failure still
+      // leaves the user able to select it by hand.
+      flash(ok ? 'Copied, now paste it' : 'Select the prompt below to copy');
     });
   }
 </script>
