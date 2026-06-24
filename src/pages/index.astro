@@ -34,7 +34,7 @@ const PROMPT = `read ${agentDisplay} and follow it`;
         <button
           id="copy-btn"
           data-url={PROMPT}
-          class="shrink-0 rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          class="shrink-0 rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
         >
           Copy prompt
         </button>
@@ -153,10 +153,16 @@ ALTER TABLE users
   const btn = document.getElementById('copy-btn');
   if (btn) {
     const RESTING = btn.textContent.trim();
-    const flash = (msg) => {
+    const flash = (msg, ok) => {
       btn.textContent = msg;
+      if (ok) {
+        btn.style.backgroundColor = '#16a34a'; // green-600
+        btn.style.color = '#fff';
+      }
       setTimeout(() => {
         btn.textContent = RESTING;
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
       }, 2000);
     };
 
@@ -198,7 +204,7 @@ ALTER TABLE users
       if (!ok) ok = legacyCopy(text);
       // The full prompt is also shown in the caption below, so a hard failure still
       // leaves the user able to select it by hand.
-      flash(ok ? 'Copied, now paste it' : 'Select the prompt below to copy');
+      flash(ok ? '✓ Copied, now paste it!' : 'Select the prompt below to copy', ok);
     });
   }
 </script>
