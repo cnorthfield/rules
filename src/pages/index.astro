@@ -204,7 +204,7 @@ ALTER TABLE users
       if (!ok) ok = legacyCopy(text);
       // The full prompt is also shown in the caption below, so a hard failure still
       // leaves the user able to select it by hand.
-      flash(ok ? '✓ Copied, now paste it!' : 'Select the prompt below to copy', ok);
+      flash(ok ? 'Copied, now paste it!' : 'Select the prompt below to copy', ok);
     });
   }
 </script>
