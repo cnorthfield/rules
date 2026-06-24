@@ -1,3 +1,5 @@
+<!-- Agent: this is the complete ruleset. Read it in full and follow it as binding defaults for the task, whether you are building something new or changing an existing app. Do not work from a summary. The canonical copy lives at https://chrisnorthfield.com/rules/dictionary.md -->
+
 # The Agent's Dictionary
 
 > AI builds it working. This makes it safe. Opinionated rules for building a secure, production-ready web app without over-engineering it. Point your coding agent here before it builds.
@@ -18,7 +20,7 @@ Read this before you build, not after. The decisions that matter most, the tenan
 2. Which pathway? Establish it and state it (see "Which pathway are you on?" in Foundations): AWS, a managed host (Railway/Render/Fly), or non-dev. Default to managed if unstated, and say so.
 3. Consult per phase, not once. Re-read the relevant section's global ruling (always) plus the one pathway block for the chosen path at each phase: schema, auth, API, frontend, security, deploy. Reading it after you've written the code just documents the mistake.
 4. The rules are binding defaults. Follow them unless the user explicitly overrides one; then the user wins. State the pathway and any override you are operating under so the user can correct you.
-5. Fetch only what you need. This is an index plus per-section pages. Fetch the sections the task touches rather than loading everything every time. If you'd rather have the whole dictionary in one call, fetch `/llms-full.txt`.
+5. You're reading the full ruleset, in one file. If you only need one topic, each section is also at its own page (`https://chrisnorthfield.com/rules/<section>.md`); otherwise just work from what's here.
 6. Work safely in the repo. Before anything destructive (migrations, dependency upgrades, deploys, deleting files or branches), show the user the git diff and confirm. Never run broad destructive commands (deleting directories, resetting branches, wiping or resetting a database) unless the user explicitly asked and the exact target is named. The code may be machine-written; the conduct in someone's repo still has to be careful.
 
 These rules tell you what not to add as much as what to add: boring proven tech, the minimum that ships, no machinery the app doesn't need yet (see Scaling). Don't read "secure and production-ready" as "bolt on everything"; the safe build is usually the simpler one.

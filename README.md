@@ -18,9 +18,10 @@ No backend, no database, no client framework, no analytics, no signup.
   They are authored once and drive both the human pages and the raw `.md`/`.txt` endpoints — no duplication.
 - **Human pages** (`/`, `/dictionary`, `/skill`, `/credits`): Astro + Tailwind, rendered from the same markdown.
 - **Machine files** (raw markdown, no HTML wrapper):
-  - `/dictionary.md` — the lean index (routing protocol + preamble + a link to each subject page); the primary URL to give an agent, for progressive disclosure
+  - `/dictionary.md` — the full dictionary in one fetch (the primary URL to give an agent)
   - `/llms.txt` — the llms.txt index
-  - `/llms-full.txt` — the whole dictionary in one file (not identical to `/dictionary.md`, which serves only the index)
+  - `/llms-full.txt` — the whole dictionary in one file (same content as `/dictionary.md`, same source)
+  - `/<section>.md` — per-section pages (e.g. `/data.md`); the progressive-disclosure option for an agent that wants one topic
 - All content is in server-returned HTML (static generation); nothing relies on client JS to render text.
   The only JS on the whole site is a tiny inline clipboard-copy on the landing page.
 

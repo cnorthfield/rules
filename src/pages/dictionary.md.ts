@@ -1,10 +1,11 @@
 import type { APIRoute } from 'astro';
-import { indexMarkdown } from '../lib/dictionary';
+import { fullMarkdown } from '../lib/dictionary';
 
-// The primary URL people point agents at: a lean index (routing protocol + links to
-// each subject page). Progressive disclosure: fetch only the pages a task needs.
-// The whole thing in one file is at /llms-full.txt.
+// The primary URL people point agents at: serve the FULL ruleset in one fetch, so a
+// visiting agent gets the actual rules, not an index to summarise or a second URL to
+// guess. Same content as /llms-full.txt, from the same single source. The per-section
+// /<slug>.md pages remain the progressive-disclosure option.
 export const GET: APIRoute = () =>
-  new Response(indexMarkdown(), {
+  new Response(fullMarkdown, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },
   });

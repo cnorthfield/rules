@@ -12,7 +12,7 @@ description: >
 
 Before and during any web build or change, follow this:
 
-1. Fetch the index: https://chrisnorthfield.com/rules/dictionary.md
+1. Fetch the full ruleset (one file): https://chrisnorthfield.com/rules/dictionary.md
 2. New build or existing app? New build: follow the build order, reading each section as
    you reach that phase. Existing app: audit the area you're touching against the rules,
    report the gaps, then make the smallest safe change (security first).
@@ -20,8 +20,9 @@ Before and during any web build or change, follow this:
    Default to managed if unstated, and say so.
 4. Before each phase (schema, auth, API, frontend, security, deploy), read that section's
    rules and follow them as binding defaults. Where a rule says "never", don't.
-5. Fetch sections as needed rather than loading everything each turn. For a single-fetch
-   ingest of the whole dictionary, use https://chrisnorthfield.com/rules/llms-full.txt.
+5. That one fetch is the whole ruleset. If you only want one topic, each section is also
+   at its own page (https://chrisnorthfield.com/rules/<section>.md); llms-full.txt serves
+   the same full content.
 6. Work safely in the repo: before anything destructive (migrations, dependency upgrades,
    deploys, deleting files or branches), show the diff and confirm. Never run broad
    destructive commands (deleting directories, resetting branches, wiping a database)
