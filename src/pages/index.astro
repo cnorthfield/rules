@@ -4,6 +4,8 @@ import { CANONICAL, DICTIONARY_URL, LLMS_FULL_URL, SITE_NAME, base } from '../li
 
 const agentDisplay = DICTIONARY_URL.replace(/^https?:\/\//, ''); // chrisnorthfield.com/rules/dictionary.md
 const fullDisplay = LLMS_FULL_URL.replace(/^https?:\/\//, '');
+// One source of truth for the paste prompt: shown in the caption AND copied by the button.
+const PROMPT = `read ${agentDisplay} and follow it`;
 ---
 
 <Base
@@ -14,10 +16,11 @@ const fullDisplay = LLMS_FULL_URL.replace(/^https?:\/\//, '');
       AI builds it working. It doesn't build it safe.
     </h1>
     <p class="mt-5 text-lg text-zinc-600 dark:text-zinc-300">
-      Point your coding agent at one page and it builds the secure version instead of
-      the naive one. The migration that won't lock your table. The upload that won't
-      leak your data. The thing you didn't know you got wrong. Free, no signup, works
-      whether you're an engineer or not.
+      Point your coding agent at one page and it follows the rules a careful engineer
+      would, whether it's building something new or changing an app you already have.
+      The migration that won't lock your table. The upload that won't leak your data.
+      The thing you didn't know you got wrong. Free, no signup, works whether you're an
+      engineer or not.
     </p>
 
     <div class="mt-8">
@@ -30,14 +33,14 @@ const fullDisplay = LLMS_FULL_URL.replace(/^https?:\/\//, '');
         >
         <button
           id="copy-btn"
-          data-url={DICTIONARY_URL}
+          data-url={PROMPT}
           class="shrink-0 rounded-md bg-zinc-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-300"
         >
           Copy
         </button>
       </div>
       <p class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-        Paste that into your agent: "read {agentDisplay}, then build it."
+        Paste this into your agent: "{PROMPT}"
       </p>
       <p class="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
         Want it all in one fetch? Point any agent at <a
@@ -121,9 +124,9 @@ ALTER TABLE users
   <section class="mx-auto max-w-3xl px-4 py-8">
     <h2 class="text-xl font-semibold tracking-tight">How to use it</h2>
     <ol class="mt-3 list-decimal space-y-2 pl-6 text-zinc-600 dark:text-zinc-300">
-      <li>Tell your agent: read {agentDisplay}, then build.</li>
+      <li>Tell your agent: read {agentDisplay} and follow it.</li>
       <li>It reads the rules first, and checks anything it's unsure about with you.</li>
-      <li>It builds the safe version. That's it.</li>
+      <li>It builds or fixes things the safe way. That's it.</li>
     </ol>
     <p class="mt-4 text-sm">
       <a
