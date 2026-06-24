@@ -14,12 +14,11 @@ Most of this dictionary is durable, but a few things rot and need a periodic che
 
 The capability rulings ("use a managed pooler", "use object storage", "use a transactional email provider") don't rot. Only the named examples do, so when refreshing, update the flagged lines and leave the rulings alone. Historical facts that were true stay true (uuidv7 landed in Postgres 18; the privacy settlements named in that section); they are illustrations, not a live tally.
 
-### Credits
+### Credits and prior art
 
-It builds on others' work:
+This isn't the first ruleset for coding agents, and it's better to point at the others than pretend it arrived from nowhere.
 
-- **Matt Pocock** and others, for the idea of getting the agent to slow down and think before it writes.
-- **Andrej Karpathy**, for the early observations on how AI coding goes wrong.
-- **Jeremy Howard**, for the llms.txt convention this site uses.
+- **Matt Pocock's** grill-me and similar skills explore getting an agent to slow down and ask before it writes. This dictionary's "review your work and ask about anything questionable once it's done" step is in that spirit.
+- This site uses **Jeremy Howard's** llms.txt convention for agent-readable indexes.
 
 Built by Chris Northfield. If something's wrong or mis-credited, tell me and I'll fix it.

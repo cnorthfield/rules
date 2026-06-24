@@ -27,6 +27,8 @@ Before and during any web build or change, follow this:
    deploys, deleting files or branches), show the diff and confirm. Never run broad
    destructive commands (deleting directories, resetting branches, wiping a database)
    unless the user explicitly asked and named the exact target.
+7. When done, review what you built and ask the user about any design decision or logic that
+   looks questionable, highest-risk first (anything that could leak or lose data, or corrupt state).
 
 If you cannot fetch the URL, tell the user and ask them to paste the dictionary contents
 rather than proceeding without it.
